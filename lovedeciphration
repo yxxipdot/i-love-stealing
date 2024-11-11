@@ -1,0 +1,54 @@
+namespace АКТУАЛЬНОФРИШНАЯ
+{
+    public partial class Form1 : System.Windows.Forms.Form
+    {
+        public Form1()
+        {
+            InitializeComponent();
+        }
+
+        private void cipherButton_Click(object sender, EventArgs e)
+        {
+            outputTextbox.Text = ciphratO.encrypt(inputTextbox.Text, keyTextbox.Text);
+            operationLabel.Text = "Encrytption complete.";
+        }
+
+        private void decipherButton_Click(object sender, EventArgs e)
+        {
+            outputTextbox.Text = ciphratO.decrypt(inputTextbox.Text, keyTextbox.Text);
+            operationLabel.Text = "Decrytption complete.";
+        }
+    }
+    public class ciphratO
+    {
+        public static string encrypt(string text, string key)
+        {
+            string result = "";
+            string text1 = text.ToUpper();
+            string key1 = key.ToUpper();
+            for (int i = 0, j = 0; i < text1.Length; i++)
+            {
+                char c = text1[i];
+                if (c < 'A' || c > 'Z') continue;
+                result += (char)((c + key1[j] - 2 * 'A') % 26 + 'A');
+                j = ++j % key1.Length;
+            }
+            result.ToLower();
+            return result;
+        }
+        public static string decrypt(string text, string key)
+        {
+            string result = "";
+            string text1 = text.ToUpper();
+            string key1 = key.ToUpper();
+            for (int i = 0, j = 0; i < text1.Length; i++)
+            {
+                char c = text1[i];
+                if (c < 'A' || c > 'Z') continue;
+                result += (char)((c - key1[j] + 26) % 26 + 'A');
+                j = ++j % key1.Length;
+            }
+            return result;
+        }
+    }
+}
